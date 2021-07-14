@@ -5,12 +5,6 @@ const port = process.env.PORT || 3000
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-const fs = require('fs')
-const key = fs.readFileSync('./key.pem')
-const cert = fs.readFileSync('./cert.pem')
-const https = require('https')
-const server = https.createServer({ key: key, cert: cert }, app)
-
 const User = require('./models/user')
 const Noticia = require('./models/noticia')
 
@@ -78,7 +72,6 @@ mongoose
   .connect(mongo, { useMongoClient: true })
   .then(() => {
     createInitialUser()
-    // app.listen(port, () => console.log('listening on port ' + port))
-    server.listen(port, () => { console.log('listening on ' + port) })
+    app.listen(port, () => console.log('listening on port ' + port))
   })
   .catch(e => console.log(e))
